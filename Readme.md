@@ -1,5 +1,3 @@
-# GACS - Eulerity iOS Take-Home Exercise
-
 # Today-Only Todo App
 
 A minimal iOS todo application built around a strict constraint:
@@ -107,8 +105,8 @@ Reason: prioritizing correctness and architecture over breadth.
 ---
 
 ## Demo Video
-
-(Add screen recording here)
+### App behavior across day change
+<video src="demo.mov" controls width="300"></video>
 
 ---
 

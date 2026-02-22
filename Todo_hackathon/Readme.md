@@ -110,7 +110,7 @@ Reason: prioritizing correctness and architecture over breadth.
 
 ## Demo
 
-https://github.com/RadhikaR77/today-only-todo/blob/main/Todo_hackathon/Demo-1.mov
+https://github.com/RadhikaR77/today-only-todo/blob/main/demo.mov
 
 ---
 

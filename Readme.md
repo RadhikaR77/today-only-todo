@@ -160,7 +160,11 @@ The demo demonstrates:
 3. Relaunching the app (tasks persist same day)
 4. Simulating next day (tasks automatically disappear)
 
-[Watch the demo](./demo.mov)
+Watch the app in action:
+
+[![Watch Demo](https://img.icons8.com/ios-filled/50/000000/video.png)](https://drive.google.com/file/d/1POkPU5BUTvwR1LB_ahv2Tuf8gYKnwoup/view?usp=sharing)
+
+> Click the icon above to view the demo video.
 
 ---
 

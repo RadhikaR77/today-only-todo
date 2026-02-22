@@ -108,9 +108,7 @@ Reason: prioritizing correctness and architecture over breadth.
 
 ## Demo Video
 
-## Demo
-
-https://github.com/RadhikaR77/today-only-todo/blob/main/demo.mov
+(Add screen recording here)
 
 ---
 

@@ -2,95 +2,118 @@
 
 # Today-Only Todo App
 
-## Overview
+A minimal iOS todo application built around a strict constraint:
 
-Thank you for taking the time to complete this take-home exercise as part of our iOS interview process.
+> Tasks only exist for the current day.
+> Every new day automatically starts fresh.
 
-### The goal of this exercise is to understand how you approach:
-1. iOS architecture and fundamentals
-2. Product constraints and tradeoffs
-3. Code clarity and organization
-4. Handling of time, state, and persistence
+Built using **SwiftUI + MVVM + Repository Pattern + CoreData**
 
-## Time Expectation
+---
 
-1. Expected Effort ~6 hours
-2. You may spend less if you choose
+## Architecture
 
-We value focus, prioritization, and clear decision-making over feature count or visual polish.
+The project follows a layered structure:
 
-## The App
+Views → ViewModel → Repository → CoreData
 
-### Build a small iOS todo/reminder app with one central constraint:
-1. The app only cares about today.
-2. Tasks belong to the current day
-3. Tasks expire at the end of the day
-4. Each new day starts with a clean slate
-5. There are intentionally no future dates, backlogs, or overdue tasks. This constraint is intentional and should guide your product and technical decisions.
+**Why?**
 
-## Technical Requirements
+The UI should not know how data is stored.
+The ViewModel should not know about CoreData.
+The repository isolates persistence from business logic.
 
-1. The app should be built using Swift and SwiftUI. 
-2. The project’s minimum deployment target must be iOS 16.
-3. Additionally, the app should be fully offline, with no network requests. 
+This keeps the app:
 
+* easier to reason about
+* testable
+* replaceable (CoreData → SwiftData/File later)
 
-### Must-Have Features
-1. Today-Only Tasks
-    > Users can add tasks for the current day
-    > Tasks from previous days are not shown
-    > Expiration happens automatically (no manual cleanup required)
-2. Task Interaction
-    > Add a task
-    > Mark a task as complete
-    > Persist tasks locally (e.g., SwiftData, CoreData, file storage, etc.)
-3. Automatic Day Reset
-    When a new day begins, old tasks should no longer appear in the main list
+---
 
-### Optional Enhancements (Not Required)
+## Handling the “Today-Only” Constraint
 
-You may choose to implement any of the following, but none are required:
+Instead of deleting tasks at midnight, each task stores a creation date.
 
-### UX / UI
-1. Option to set a task expiration time (same day only)
-2. Completed Task animations
-3. Haptic feedback
-4. Thoughtful empty states
-5. Light/Dark mode support
+When fetching tasks, the repository filters using the current day range:
 
-### iOS Platform Features
-1. Local notifications (must occur before end of day)
-2. Widgets
-3. App Intents / Siri
+startOfDay(today) ≤ task.date < startOfDay(tomorrow)
 
-### Engineering / Architecture
-1. Clear separation of concerns
-2. View models or similar patterns
-3. Unit tests for business logic
-4. Date / time abstractions
+This means:
 
-We do not expect all of these. A small, clean implementation is perfectly acceptable.
+* Old tasks automatically disappear
+* No background cleanup needed
+* No risk of accidental deletion
 
-### Out of Scope
+The system behaves correctly even if the app stays closed overnight.
 
-To keep the exercise focused and fair, please do not implement:
-1. User accounts or authentication
-2. Scheduling tasks for future days
-3. Complex settings screens
+---
 
-## Submission Instructions
+## State Management
 
-Please submit the following:
-1. A Git repository link
-2. A README that includes:
-    > Your overall approach
-    > Key decisions or tradeoffs
-    > What would you improve with more time
-3. A short demo video (30–60 seconds)
+`TodayViewModel` acts as the single source of truth:
 
-### Questions
+* Separates completed vs active tasks
+* Updates UI reactively
+* Prevents business logic inside views
 
-If anything in this document is unclear or you need clarification while working on the exercise, please reach out. We’re happy to help and want the expectations to be clear.
+Views remain simple renderers of state.
 
+---
 
-# Thank you again for your time and effort!
+## UX Decisions
+
+I intentionally kept the UI minimal and focused on clarity.
+
+Enhancements added:
+
+* Haptic feedback on complete/delete
+* Animated completion state
+* Dark mode support
+* Empty state guidance
+
+I avoided feature creep to keep the constraint central.
+
+---
+
+## Tradeoffs
+
+Not implemented:
+
+* Notifications
+* Widgets
+* Time-based expiration within the day
+
+Reason: prioritizing correctness and architecture over breadth.
+
+---
+
+## What I Would Improve With More Time
+
+* Unit tests for date filtering logic
+* Injected clock abstraction for testability
+* SwiftData migration
+* Reminder notification before end of day
+* Home screen widget
+
+---
+
+## Running the App
+
+1. Open `Todo_hackathon.xcodeproj`
+2. Run on iOS 16+ simulator
+3. Add tasks — they reset automatically the next day
+
+---
+
+## Demo Video
+
+## Demo
+
+https://github.com/RadhikaR77/today-only-todo/blob/main/Todo_hackathon/Demo-1.mov
+
+---
+
+## Author
+
+Radhika Rathi
